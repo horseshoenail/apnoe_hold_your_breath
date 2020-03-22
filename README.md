@@ -1,4 +1,4 @@
-# apnoe_hold_your_breath
+# train to hold your breath e.g. for free diving
 // developer:            horseshoenail
 // Version:              1.0
 // date of last version: 22.3.2020
