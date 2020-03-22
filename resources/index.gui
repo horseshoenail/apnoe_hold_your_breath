@@ -1,0 +1,241 @@
+<svg>
+  <text id="general_text_label"/>
+  <text id="hr_label"/>
+
+  <svg id = "startScreen">
+    
+    <use id="settings" href="#square-button" y="5" x="0" width="25%" fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="set" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>   
+    <use id="hold_breath" href="#square-button" y="5" x="25%" width="75%" fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="hold breath" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>   
+    <use id="start_CO2" href="#square-button" y="75" height="85" fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="Start CO2 table" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>
+    <use id="start_O2" href="#square-button" y="160" height="85"  fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="Start O2 table" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>          
+  </svg>  
+  
+  <svg id = "holdScreen">
+    <text id="holdScreen_timer"/>
+    <image id="hr_icon" href=""/>
+    <image id="play_pause_image" href=""/>
+    
+    <use id="set_as_max_button" href="#square-button"  y="75" height="85" fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="set as basis for tables" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>   
+    <use id="save_in_history_button" href="#square-button" y="160" height="85"  fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="save in history" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>   
+  </svg>  
+  
+  <svg id = "historyScreen">
+    <text id="date0" class ="defaultText"/>
+    <text id="value0" class ="defaultText"/>
+    <text id="date1" class ="defaultText"/>
+    <text id="value1" class ="defaultText"/>
+    <text id="date2" class ="defaultText"/>
+    <text id="value2" class ="defaultText"/>
+    <text id="date3" class ="defaultText"/>
+    <text id="value3" class ="defaultText"/>
+    <text id="date4" class ="defaultText"/>
+    <text id="value4" class ="defaultText"/>
+  </svg>
+
+  <svg id = "TableScreen">
+    <rect id = "rect_breathe"/>
+    <rect id = "rect_hold"/>
+    <text id = "total_time_label" class ="defaultText"/>
+    <text id = "breathe_label" class ="defaultText"/>
+    <text id = "breathe_time" class ="defaultText"/>
+    <text id = "hold_label" class ="defaultText"/>
+    <text id = "hold_time" class ="defaultText"/>
+
+    <circle id = "circle0" fill="white"/>
+    <circle id = "circle1" fill="white"/>
+    <circle id = "circle2" fill="white" />
+    <circle id = "circle3" fill="white" />
+    <circle id = "circle4" fill="white" />
+    <circle id = "circle5" fill="white" />
+    <circle id = "circle6" fill="white" />
+    <circle id = "circle7" fill="white" />
+    
+    <line id = "line0" fill="white" stroke-width="2"/>
+    <line id = "line1" fill="white" stroke-width="2"/>
+    <line id = "line2" fill="white" stroke-width="2" />
+    <line id = "line3" fill="white" stroke-width="2" />
+    <line id = "line4" fill="white" stroke-width="2"/>
+    <line id = "line5" fill="white" stroke-width="2" />
+    <line id = "line6" fill="white" stroke-width="2" />
+    
+    <text id = "hr_text0" fill="white" class ="defaultText"/>
+    <text id = "hr_text1" fill="white" class ="defaultText"/>
+    <text id = "hr_text2" fill="white" class ="defaultText" />
+    <text id = "hr_text3" fill="white" class ="defaultText" />
+    <text id = "hr_text4" fill="white" class ="defaultText" />
+    <text id = "hr_text5" fill="white" class ="defaultText" />
+    <text id = "hr_text6" fill="white" class ="defaultText" />
+    <text id = "hr_text7" fill="white" class ="defaultText" />
+    
+    <circle id = "circle20" fill="white"/>
+    <circle id = "circle21" fill="white"/>
+    <circle id = "circle22" fill="white" />
+    <circle id = "circle23" fill="white" />
+    <circle id = "circle24" fill="white" />
+    <circle id = "circle25" fill="white" />
+    <circle id = "circle26" fill="white" />
+    <circle id = "circle27" fill="white" />
+    
+    <line id = "line20" fill="white" stroke-width="2"/>
+    <line id = "line21" fill="white" stroke-width="2"/>
+    <line id = "line22" fill="white" stroke-width="2"/>
+    <line id = "line23" fill="white" stroke-width="2"/>
+    <line id = "line24" fill="white" stroke-width="2" />
+    <line id = "line25" fill="white" stroke-width="2" />
+    <line id = "line26" fill="white" stroke-width="2" />
+    
+    <text id = "hr_text20" fill="white" class ="defaultText"/>
+    <text id = "hr_text21" fill="white" class ="defaultText"/>
+    <text id = "hr_text22" fill="white" class ="defaultText" />
+    <text id = "hr_text23" fill="white" class ="defaultText" />
+    <text id = "hr_text24" fill="white" class ="defaultText" />
+    <text id = "hr_text25" fill="white" class ="defaultText" />
+    <text id = "hr_text26" fill="white" class ="defaultText" />
+    <text id = "hr_text27" fill="white" class ="defaultText" />
+
+    <use id="continue_countdown" href="#square-button" y="10" x="10" width="90%" height="45%" fill="green"
+      font-family="System-Regular" font-size="50">
+      <set href="#text" attributeName="text-buffer" to="continue!" />
+      <set href="#text" attributeName="fill" to="green" />
+    </use>  
+    <use id="stop_countdown" href="#square-button" y="130" x="10" width="90%" height="45%" fill="red"
+      font-family="System-Regular" font-size="50">
+      <set href="#text" attributeName="text-buffer" to="  stop!" />
+      <set href="#text" attributeName="fill" to="red" />
+    </use>  
+  </svg>
+  
+  <svg id = "setTimeScreen">
+      <textarea id = "set_time_label" class ="defaultText"/>
+      <use id="tumbler_minutes" href="#tumblerview" x="20" y="0" width="100" height="250">
+       <use id="item0" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">00</text>
+       </use>
+       <use id="item1" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">01</text>
+       </use>
+       <use id="item2" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">02</text>
+       </use>
+       <use id="item3" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">03</text>
+       </use>
+       <use id="item4" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">04</text>
+       </use>
+       <use id="item5" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">05</text>
+       </use>
+       <use id="item6" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">06</text>
+       </use>
+       <use id="item7" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">07</text>
+       </use>
+       <use id="item8" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">08</text>
+       </use>
+       <use id="item9" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">09</text>
+       </use>       
+       <use id="item10" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">10</text>
+       </use>
+       <use id="item11" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">11</text>
+       </use>
+       <use id="item12" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">12</text>
+       </use>
+       <use id="item13" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">13</text>
+       </use>
+       <use id="item14" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">14</text>
+       </use>
+       <use id="item15" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">15</text>
+       </use>
+     </use>
+    
+     <use id="tumbler_seconds_1" href="#tumblerview" x="150" y="0" width="50" height="250" >
+       <use id="item0" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">0</text>
+       </use>
+       <use id="item1" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">1</text>
+       </use>
+       <use id="item2" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">2</text>
+       </use>
+       <use id="item3" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">3</text>
+       </use>
+       <use id="item4" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">4</text>
+       </use>
+       <use id="item5" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">5</text>
+       </use>   
+     </use>
+
+     <use id="tumbler_seconds_2" href="#tumblerview" x="210" y="0" width="50" height="250">
+       <use id="item0" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">0</text>
+       </use>
+       <use id="item1" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">1</text>
+       </use>
+       <use id="item2" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">2</text>
+       </use>
+       <use id="item3" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">3</text>
+       </use>
+       <use id="item4" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">4</text>
+       </use>
+       <use id="item5" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">5</text>
+       </use>
+       <use id="item6" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">6</text>
+       </use>
+       <use id="item7" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">7</text>
+       </use>
+       <use id="item8" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">8</text>
+       </use>
+       <use id="item9" href="#tumbler-item">
+        <text id="tumbler_value" class="digit4tumbler">9</text>
+       </use>       
+     </use>
+     <text id="doubledot_label">:</text>
+  </svg>  
+  
+</svg>

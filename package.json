@@ -1,0 +1,24 @@
+{
+  "fitbit": {
+    "appUUID": "135baff3-c27f-4e46-a982-d57130b8521c",
+    "appType": "app",
+    "appDisplayName": "apnoe",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#607d8b",
+    "requestedPermissions": [
+      "access_heart_rate"
+    ],
+    "buildTargets": [
+      "higgs"
+    ],
+    "i18n": {
+      "en": {
+        "name": "apnoe"
+      }
+    },
+    "defaultLanguage": "en-US"
+  },
+  "devDependencies": {
+    "@fitbit/sdk": "~4.1.0"
+  }
+}
