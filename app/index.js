@@ -364,7 +364,11 @@ function show_holdScreen() {
   
   holdScreen_timer.style.display = "inline";
   play_pause_image.style.display = "inline";
-  play_pause_button.style.display = "inline";
+  if ((device.modelName == "Ionic")|(device.modelName == "Versa")){  
+    play_pause_button.style.display = "none";
+  }else{
+    play_pause_button.style.display = "inline";
+  }
   holdScreen_timer.text = "00:00"
   if (device.modelName == "Ionic"){
     holdScreen_timer.style.fontSize = 120
@@ -691,7 +695,11 @@ function start_pause_holdingBreath() {
     hr_label.style.display               = "inline"
     set_as_max_button.style.display      = "none";
     save_in_history_button.style.display = "none";
-    play_pause_button.style.display      = "inline"
+    if ((device.modelName == "Ionic")|(device.modelName == "Versa")){  
+      play_pause_button.style.display = "none";
+    }else{
+      play_pause_button.style.display = "inline";
+    }
   } 
 }
 
@@ -719,7 +727,7 @@ set_as_max_button.onactivate = function(evt) {
   let dict_in = read_data(DATA_FILE)
   hr_icon.style.display                = "none"
   play_pause_image.style.display       = "none";
-  play_pause_button.style.display       = "none";
+  play_pause_button.style.display      = "none";
   set_as_max_button.style.display      = "none";
   save_in_history_button.style.display = "none";
 
