@@ -1,8 +1,9 @@
 // developer:            horseshoenail
-// Version:              1.0
-// date of last version: 22.3.2020
+// Version:              1.1
+// date of last version: 29.3.2020
 
-/* This FITBIT apps helps you to increase your maximum breath holding time for e.g. free diving.
+/* 
+This FITBIT app helps you to increase your maximum breath holding time for e.g. free diving.
 
 --- IMPORTANT NOTES ---
 
@@ -15,12 +16,11 @@
 
   !!! Important note 2: Device health warning !!!
   As the countdown does not work when the screen is off, the display is turned
-  to “always on” mode while the tables are running. The device switches to 
+  to â€œalways onâ€ mode while the tables are running. The device switches to 
   dim mode during this time. As the whole table might take 20 to 
   30 min this behavior is consuming battery and might influence your device. 
 
   - The app requires access to your heart rate sensor 
-  - So far it’s only available for FITBIT IONIC
 
 --- GETTING STARTED ---
 
@@ -35,12 +35,12 @@
     - mark all folders (app, companion, resources, settings) and drag and drop them into
       the left menu of the fitbit.studio development surface. All folders should now get 
       copied to your fitbit.studio development environment
-    - for testing the app you now also need to install the “Fitbit OS simulator”.
+    - for testing the app you now also need to install the â€œFitbit OS simulatorâ€.
       You can find it here: 
        - windows: https://simulator-updates.fitbit.com/download/latest/win
        - macOS: https://simulator-updates.fitbit.com/download/latest/mac
     - start the Fitbit OS simulator 
-    - In fitbit.studio use the “select Phone” and “select device” menu to select the simulator
+    - In fitbit.studio use the â€œselect Phoneâ€ and â€œselect deviceâ€ menu to select the simulator
     - with the >Run button you can build and start the app, its now shown in the Simulator
     - if you want to run it on your own device:
       - on your phone open the fitbit app
@@ -106,6 +106,7 @@
       apnea ends with 80% of your maximum breath holding time and
       for each previous cycle the time span is 15 sec lower with a 
       minimum of 30 seconds
+
 */
 
 
@@ -118,21 +119,43 @@ import { HeartRateSensor } from "heart-rate";
 import * as fs from "fs";
 import { vibration } from "haptics";
 import { display } from "display";
+import { me as device } from "device";
+import { me as appbit } from "appbit";
+
+//console.log('device is Versa:',device.modelName == "Versa")
+//console.log('device is Ionic:',device.modelName == "Ionic")
+if (device.modelName == "Ionic"){
+  var screen_dimx = 348
+  var screen_dimy = 250
+}else{
+  var screen_dimx = 300
+  var screen_dimy = 300
+}
+
 
 // prevent from stoppinng the app by automatic timeout
 me.appTimeoutEnabled = false;
 
 // some general settings to set app behaviour
 var color_breathe = "forestgreen"
-var color_hold    = "navy"
+var color_hold    = "blue"//"navy"
 var max_cycles    = 8 // needs to smaller equal 8 as otherwise the dispaly is not working
 
 
 // start heart rate monitoring
-var heart_rate           = new HeartRateSensor();
-heart_rate.start();
-var hr_label     = document.getElementById("hr_label");
-var hr_icon      = document.getElementById("hr_icon");
+ if (HeartRateSensor && appbit.permissions.granted("access_heart_rate")) {
+  var heart_rate = new HeartRateSensor();
+  heart_rate.start();
+}else{
+  class heart_rate_empty {
+    constructor() {
+      this.heartRate = 0;
+    }
+  }  
+  const heart_rate = new heart_rate_empty()
+}
+var hr_label = document.getElementById("hr_label");
+var hr_icon = document.getElementById("hr_icon");
 
 
 // define the different screens used in the app
@@ -166,18 +189,19 @@ var tumbler_minutes    = document.getElementById("tumbler_minutes");
 var tumbler_seconds_1  = document.getElementById("tumbler_seconds_1");
 var tumbler_seconds_2  = document.getElementById("tumbler_seconds_2");
 var doubledot_label    = document.getElementById("doubledot_label");
-var set_time_in_s      = 0;
 var set_time_label     = document.getElementById("set_time_label");
+var set_time_in_s      = 0;
 
 // holdScreen elements
 var holdScreen_timer = document.getElementById("holdScreen_timer");
 var play_pause_image = document.getElementById("play_pause_image");
-var set_as_max_button      = document.getElementById("set_as_max_button");
+var set_as_max_button = document.getElementById("set_as_max_button");
 var save_in_history_button = document.getElementById("save_in_history_button");
+var play_pause_button = document.getElementById("play_pause_button");
 
 // historyScreen elements (is whown when the hold breath stop watch was stopped)
-let saved_dates_label  = new Array();
-let saved_times_label  = new Array();
+let saved_dates_label = new Array();
+let saved_times_label = new Array();
 saved_dates_label[0] = document.getElementById("date0");
 saved_times_label[0] = document.getElementById("value0");
 saved_dates_label[1] = document.getElementById("date1");
@@ -340,8 +364,13 @@ function show_holdScreen() {
   
   holdScreen_timer.style.display = "inline";
   play_pause_image.style.display = "inline";
+  play_pause_button.style.display = "inline";
   holdScreen_timer.text = "00:00"
-  holdScreen_timer.style.fontSize = 120
+  if (device.modelName == "Ionic"){
+    holdScreen_timer.style.fontSize = 120
+  }else{
+    holdScreen_timer.style.fontSize = 100
+  }  
   holdScreen_timer.y = 180
   holdScreen_timer.x = 30
 
@@ -353,6 +382,7 @@ function hide_holdScreen() {
   
   hr_icon.style.display                = "none"
   play_pause_image.style.display       = "none";
+  play_pause_button.style.display      = "none";
   set_as_max_button.style.display      = "none";
   save_in_history_button.style.display = "none";
 }
@@ -384,6 +414,10 @@ function show_setTimeScreen() {
   tumbler_seconds_1.style.display = "inline";
   tumbler_seconds_2.style.display = "inline";
   doubledot_label.style.display   = "inline";
+  if (device.modelName != "Ionic"){
+    doubledot_label.x = 140
+    doubledot_label.y = 140 
+  }
 }
 function hide_setTimeScreen() {
   setTimeScreen.style.display     = "none";
@@ -406,7 +440,7 @@ function show_TableScreen(){
   
   hr_label.style.display  = "inline"
   hr_label.style.fontSize = 40
-  hr_label.x = 280
+  hr_label.x = 0.8*screen_dimx
   hr_label.y = 240
   hr_label.style.fill = "red"
 
@@ -414,14 +448,14 @@ function show_TableScreen(){
   rect_breathe.x = 0
   rect_breathe.y = 30
   rect_breathe.height = 60
-  rect_breathe.width  = 360
+  rect_breathe.width  = screen_dimx
   rect_breathe.style.fill = color_breathe
   
   rect_hold.style.display = "inline";
   rect_hold.x = 0
   rect_hold.y = 105
   rect_hold.height = 60
-  rect_hold.width  = 360
+  rect_hold.width  = screen_dimx
   rect_hold.style.fill = color_hold
   
   breathe_label.style.display = "inline";
@@ -434,7 +468,7 @@ function show_TableScreen(){
   breathe_time.text = "";
   breathe_time.style.fill  = "white"
   breathe_time.style.fontSize = 60
-  breathe_time.x = 190
+  breathe_time.x = 0.52*screen_dimx //190
   breathe_time.y = 80
 
   hold_label.style.display  = "inline";
@@ -447,17 +481,22 @@ function show_TableScreen(){
   hold_time.style.fill  = "white"
   hold_time.text  = "";
   hold_time.style.fontSize = 60
-  hold_time.x = 190
+  hold_time.x = 0.52*screen_dimx //190
   hold_time.y = 156
 
   for (var i = 0; i < max_cycles; i++){
     circle_array[i].style.display = "inline"
-    circle_array[i].cx = 20+i*44
+    if (device.modelName == "Ionic"){
+      circle_array[i].cx = 20+i*44
+    }else{
+      circle_array[i].cx = 20+i*36
+    }
     circle_array[i].cy = 190
     circle_array[i].r = 15
     circle_array[i].style.fill = "white"
   }
 }
+
 
 function hide_TableScreen(){
   display.autoOff = true
@@ -595,6 +634,7 @@ document.onkeypress = function(e) {
 hold_breath.onactivate = function(evt) {
    hide_startScreen()
    reset_timer()
+   counting = false
    show_holdScreen()
 }
 
@@ -635,17 +675,23 @@ function start_pause_holdingBreath() {
     holdScreen_timer.x = 10
     hr_icon.style.display                = "none"
     hr_label.style.display               = "none"
+    play_pause_button.style.display      = "none"
     set_as_max_button.style.display      = "inline";
     save_in_history_button.style.display = "inline";
   } else {
-    holdScreen_timer.style.fontSize = 120
+    
     holdScreen_timer.y = 180
     holdScreen_timer.x = 30
-
+    if (device.modelName == "Ionic"){
+      holdScreen_timer.style.fontSize = 120
+    }else{
+      holdScreen_timer.style.fontSize = 100
+    }
     hr_icon.style.display                = "inline"
     hr_label.style.display               = "inline"
     set_as_max_button.style.display      = "none";
     save_in_history_button.style.display = "none";
+    play_pause_button.style.display      = "inline"
   } 
 }
 
@@ -659,6 +705,12 @@ function set_play_pause_icon() {
   }
 }
 
+play_pause_button.onactivate = function(evt) {
+  if (actually_showing  == "holdScreen"){
+     start_pause_holdingBreath()
+  }
+}
+
 set_as_max_button.onactivate = function(evt) {
    // save the time from the holdingScreen timer as max time locally
   actually_showing = "setMaxScreen"
@@ -667,6 +719,7 @@ set_as_max_button.onactivate = function(evt) {
   let dict_in = read_data(DATA_FILE)
   hr_icon.style.display                = "none"
   play_pause_image.style.display       = "none";
+  play_pause_button.style.display       = "none";
   set_as_max_button.style.display      = "none";
   save_in_history_button.style.display = "none";
 
@@ -689,13 +742,18 @@ save_in_history_button.onactivate = function(evt) {
   write_history(DATA_FILE, tdiff)
   hr_icon.style.display                = "none"
   play_pause_image.style.display       = "none";
+  play_pause_button.style.display      = "none";
   set_as_max_button.style.display      = "none";
   save_in_history_button.style.display = "none";
   holdScreen_timer.style.display       = "none";
 
   general_text_label.style.display     = "inline"
   general_text_label.text = "your history:"
-  general_text_label.style.fontSize = 40
+  if (device.modelName=="Versa"){
+    general_text_label.style.fontSize = 35
+  }else{
+    general_text_label.style.fontSize = 40
+  }
   general_text_label.y = 40
   general_text_label.x = 10  
   
@@ -709,7 +767,7 @@ save_in_history_button.onactivate = function(evt) {
   }
 }
 
-function showvalues(date,value,x,y,date_label,time_lable){
+function showvalues(date,value,x,y,date_label,time_label){
   // after the hold breath action was stopped and the 
   // user clicked save in history the last historic values are
   // displayed on the watch
@@ -723,12 +781,12 @@ function showvalues(date,value,x,y,date_label,time_lable){
   date_label.y = y
   date_label.style.fill = "white"
 
-  time_lable.style.display = "inline"
-  time_lable.text = "- "+value+" sec."
-  time_lable.style.fontSize = 20
-  time_lable.x = x +220 
-  time_lable.y = y
-  time_lable.style.fill = "white"
+  time_label.style.display = "inline"
+  time_label.text = "- "+value+" sec."
+  time_label.style.fontSize = 20
+  time_label.x = x + 0.67*screen_dimx 
+  time_label.y = y
+  time_label.style.fill = "white"
 }
 
 
@@ -918,10 +976,10 @@ function update_table(){
           countdown = 0
         }
         breathe_time.text  = get_time_from_tdiff(countdown);
-        rect_breathe.width = Math.floor(350*(countdown/ mytable.ventilate[cycle]))
+        rect_breathe.width = Math.floor(screen_dimx*(countdown/ mytable.ventilate[cycle]))
         // while the breathing countdown is running always show the holding bar
         // and also show the next holding time which is coming 
-        rect_hold.width    = 360
+        rect_hold.width    = screen_dimx
         hold_time.text     = get_time_from_tdiff(mytable.apnea[cycle]);
         mytable.hr_sum_breathe[cycle]   = mytable.hr_sum_breathe[cycle] + parseInt(hr_label.text)
         mytable.hr_count_breathe[cycle] = mytable.hr_count_breathe[cycle] + 1
@@ -932,7 +990,7 @@ function update_table(){
           countdown = 0
         }    
         hold_time.text   = get_time_from_tdiff(countdown);
-        rect_hold.width  = Math.floor(350*(countdown/ mytable.apnea[cycle]))
+        rect_hold.width  = Math.floor(screen_dimx*(countdown/ mytable.apnea[cycle]))
         mytable.hr_sum_hold[cycle]      = mytable.hr_sum_hold[cycle] + parseInt(hr_label.text)
         mytable.hr_count_hold[cycle]    = mytable.hr_count_hold[cycle] + 1
       }
@@ -1024,7 +1082,7 @@ function update_table(){
            circle_array[i].r = 5
            circle_array[i].style.display = "inline"
            circle_array[i].style.fill = color_breathe
-           circle_array[i].cy = 250-((mean_hr_breathe[i]-min_hr)/(max_hr-min_hr))*220
+           circle_array[i].cy = screen_dimy-((mean_hr_breathe[i]-min_hr)/(max_hr-min_hr))*220
            hr_text_array[i].style.display = "inline"
            hr_text_array[i].x = circle_array[i].cx
            hr_text_array[i].y = 30
@@ -1040,7 +1098,7 @@ function update_table(){
            circle_array2[i].r = 5
            circle_array2[i].style.fill = color_hold
            circle_array2[i].cx = circle_array[i].cx
-           circle_array2[i].cy = 250-((mean_hr_hold[i]-min_hr)/(max_hr-min_hr))*220
+           circle_array2[i].cy = screen_dimy-((mean_hr_hold[i]-min_hr)/(max_hr-min_hr))*screen_dimy*0.9
            hr_text_array2[i].style.display = "inline"
            hr_text_array2[i].x = circle_array[i].cx
            hr_text_array2[i].y = 50

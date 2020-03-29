@@ -30,7 +30,11 @@
     <text id="holdScreen_timer"/>
     <image id="hr_icon" href=""/>
     <image id="play_pause_image" href=""/>
-    
+    <use id="play_pause_button" href="#square-button" y="70%" height="30%"  fill="white"
+      font-family="System-Regular" font-size="40">
+      <set href="#text" attributeName="text-buffer" to="start/stop" />
+      <set href="#text" attributeName="fill" to="white" />
+    </use>      
     <use id="set_as_max_button" href="#square-button"  y="75" height="85" fill="white"
       font-family="System-Regular" font-size="40">
       <set href="#text" attributeName="text-buffer" to="set as basis for tables" />
@@ -122,7 +126,7 @@
       <set href="#text" attributeName="text-buffer" to="continue!" />
       <set href="#text" attributeName="fill" to="green" />
     </use>  
-    <use id="stop_countdown" href="#square-button" y="130" x="10" width="90%" height="45%" fill="red"
+    <use id="stop_countdown" href="#square-button" y="135" x="10" width="90%" height="45%" fill="red"
       font-family="System-Regular" font-size="50">
       <set href="#text" attributeName="text-buffer" to="  stop!" />
       <set href="#text" attributeName="fill" to="red" />

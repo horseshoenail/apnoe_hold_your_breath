@@ -3,7 +3,7 @@ import { settingsStorage } from "settings";
 
 // Message socket opens
 messaging.peerSocket.onopen = () => {
-  //console.log("Companion Socket Open");
+  console.log("Companion Socket Open");
 };
 
 // Message socket closes
